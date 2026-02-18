@@ -9,6 +9,7 @@ import 'repositories/ml_repository.dart';
 import 'repositories/disease_info_repository.dart';
 import 'repositories/location_repository.dart';
 import 'screens/home_screen.dart';
+import 'screens/splash_screen.dart';
 import 'utils/constants.dart';
 
 void main() async {
@@ -61,14 +62,14 @@ class DermatoLabApp extends StatelessWidget {
               backgroundColor: AppColors.primaryColor,
               foregroundColor: Colors.white,
             ),
-            bottomNavigationBarTheme: BottomNavigationBarThemeData(
+            bottomNavigationBarTheme: const BottomNavigationBarThemeData(
               selectedItemColor: AppColors.primaryColor,
               unselectedItemColor: Colors.grey,
               type: BottomNavigationBarType.fixed,
               elevation: 8,
             ),
           ),
-          home: const HomeScreen(),
+          home: const SplashScreen(),
         ),
       ),
     );

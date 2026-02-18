@@ -9,11 +9,7 @@ class HistoryItem extends StatelessWidget {
   final DetectionResult result;
   final VoidCallback onDelete;
 
-  const HistoryItem({
-    super.key,
-    required this.result,
-    required this.onDelete,
-  });
+  const HistoryItem({super.key, required this.result, required this.onDelete});
 
   @override
   Widget build(BuildContext context) {
@@ -61,9 +57,8 @@ class HistoryItem extends StatelessWidget {
                     children: [
                       Text(
                         result.diseaseName,
-                        style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                              fontWeight: FontWeight.bold,
-                            ),
+                        style: Theme.of(context).textTheme.titleMedium
+                            ?.copyWith(fontWeight: FontWeight.bold),
                       ),
                       const SizedBox(height: 4),
                       Text(
@@ -72,10 +67,12 @@ class HistoryItem extends StatelessWidget {
                       ),
                       const SizedBox(height: 4),
                       Text(
-                        DateFormat('MMM dd, yyyy - HH:mm').format(result.timestamp),
+                        DateFormat(
+                          'MMM dd, yyyy - HH:mm',
+                        ).format(result.timestamp),
                         style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                              color: AppColors.textSecondary,
-                            ),
+                          color: AppColors.textSecondary,
+                        ),
                       ),
                     ],
                   ),

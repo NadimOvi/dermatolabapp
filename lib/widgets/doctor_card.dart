@@ -26,7 +26,10 @@ class DoctorCard extends StatelessWidget {
                     color: AppColors.primaryColor.withOpacity(0.1),
                     borderRadius: BorderRadius.circular(25),
                   ),
-                  child: const Icon(Icons.local_hospital, color: AppColors.primaryColor),
+                  child: const Icon(
+                    Icons.local_hospital,
+                    color: AppColors.primaryColor,
+                  ),
                 ),
                 const SizedBox(width: 12),
                 Expanded(
@@ -35,15 +38,14 @@ class DoctorCard extends StatelessWidget {
                     children: [
                       Text(
                         doctor.name,
-                        style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                              fontWeight: FontWeight.bold,
-                            ),
+                        style: Theme.of(context).textTheme.titleMedium
+                            ?.copyWith(fontWeight: FontWeight.bold),
                       ),
                       Text(
                         doctor.specialty,
                         style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                              color: AppColors.textSecondary,
-                            ),
+                          color: AppColors.textSecondary,
+                        ),
                       ),
                     ],
                   ),
@@ -53,7 +55,11 @@ class DoctorCard extends StatelessWidget {
             const SizedBox(height: 12),
             Row(
               children: [
-                const Icon(Icons.location_on, size: 16, color: AppColors.textSecondary),
+                const Icon(
+                  Icons.location_on,
+                  size: 16,
+                  color: AppColors.textSecondary,
+                ),
                 const SizedBox(width: 4),
                 Expanded(
                   child: Text(
@@ -76,7 +82,11 @@ class DoctorCard extends StatelessWidget {
                   ),
                   const SizedBox(width: 16),
                 ],
-                const Icon(Icons.directions_walk, size: 16, color: AppColors.textSecondary),
+                const Icon(
+                  Icons.directions_walk,
+                  size: 16,
+                  color: AppColors.textSecondary,
+                ),
                 const SizedBox(width: 4),
                 Text(
                   '${doctor.distance.toStringAsFixed(1)} km',
@@ -89,7 +99,8 @@ class DoctorCard extends StatelessWidget {
               children: [
                 Expanded(
                   child: OutlinedButton.icon(
-                    onPressed: () => _launchMaps(doctor.latitude, doctor.longitude),
+                    onPressed: () =>
+                        _launchMaps(doctor.latitude, doctor.longitude),
                     icon: const Icon(Icons.directions, size: 18),
                     label: const Text('Directions'),
                     style: OutlinedButton.styleFrom(
@@ -120,7 +131,9 @@ class DoctorCard extends StatelessWidget {
   }
 
   Future<void> _launchMaps(double lat, double lng) async {
-    final url = Uri.parse('https://www.google.com/maps/dir/?api=1&destination=$lat,$lng');
+    final url = Uri.parse(
+      'https://www.google.com/maps/dir/?api=1&destination=$lat,$lng',
+    );
     if (await canLaunchUrl(url)) {
       await launchUrl(url, mode: LaunchMode.externalApplication);
     }

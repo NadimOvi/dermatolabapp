@@ -10,10 +10,7 @@ import 'doctor_list_screen.dart';
 class ResultScreen extends StatefulWidget {
   final DetectionResult result;
 
-  const ResultScreen({
-    super.key,
-    required this.result,
-  });
+  const ResultScreen({super.key, required this.result});
 
   @override
   State<ResultScreen> createState() => _ResultScreenState();
@@ -35,10 +32,7 @@ class _ResultScreenState extends State<ResultScreen> {
               tooltip: AppStrings.saveToHistory,
             ),
           if (_isSaved)
-            const IconButton(
-              icon: Icon(Icons.bookmark),
-              onPressed: null,
-            ),
+            const IconButton(icon: Icon(Icons.bookmark), onPressed: null),
         ],
       ),
       body: SingleChildScrollView(
@@ -85,7 +79,8 @@ class _ResultScreenState extends State<ResultScreen> {
                         ),
                         child: Icon(
                           DiseaseLabels.icons[widget.result.diseaseCode],
-                          color: DiseaseLabels.colors[widget.result.diseaseCode],
+                          color:
+                              DiseaseLabels.colors[widget.result.diseaseCode],
                           size: 40,
                         ),
                       ),
@@ -96,16 +91,14 @@ class _ResultScreenState extends State<ResultScreen> {
                           children: [
                             Text(
                               'Detected Condition',
-                              style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                                    color: AppColors.textSecondary,
-                                  ),
+                              style: Theme.of(context).textTheme.bodySmall
+                                  ?.copyWith(color: AppColors.textSecondary),
                             ),
                             const SizedBox(height: 4),
                             Text(
                               widget.result.diseaseName,
-                              style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                                    fontWeight: FontWeight.bold,
-                                  ),
+                              style: Theme.of(context).textTheme.titleLarge
+                                  ?.copyWith(fontWeight: FontWeight.bold),
                             ),
                           ],
                         ),
@@ -124,15 +117,17 @@ class _ResultScreenState extends State<ResultScreen> {
                         children: [
                           Text(
                             AppStrings.confidence,
-                            style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                                  fontWeight: FontWeight.w500,
-                                ),
+                            style: Theme.of(context).textTheme.bodyMedium
+                                ?.copyWith(fontWeight: FontWeight.w500),
                           ),
                           Text(
                             '${(widget.result.confidence * 100).toStringAsFixed(1)}%',
-                            style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                            style: Theme.of(context).textTheme.titleMedium
+                                ?.copyWith(
                                   fontWeight: FontWeight.bold,
-                                  color: _getConfidenceColor(widget.result.confidence),
+                                  color: _getConfidenceColor(
+                                    widget.result.confidence,
+                                  ),
                                 ),
                           ),
                         ],
@@ -198,8 +193,8 @@ class _ResultScreenState extends State<ResultScreen> {
                 return ElevatedButton.icon(
                   onPressed: () {
                     context.read<DetectionBloc>().add(
-                          GetAIRecommendationsEvent(widget.result),
-                        );
+                      GetAIRecommendationsEvent(widget.result),
+                    );
                   },
                   icon: const Icon(Icons.psychology_outlined),
                   label: const Text(AppStrings.treatment),
@@ -208,7 +203,9 @@ class _ResultScreenState extends State<ResultScreen> {
                     foregroundColor: Colors.white,
                     padding: const EdgeInsets.symmetric(vertical: 16),
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(AppDimensions.radiusMedium),
+                      borderRadius: BorderRadius.circular(
+                        AppDimensions.radiusMedium,
+                      ),
                     ),
                   ),
                 );
@@ -223,9 +220,8 @@ class _ResultScreenState extends State<ResultScreen> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => DoctorListScreen(
-                      detectionResult: widget.result,
-                    ),
+                    builder: (context) =>
+                        DoctorListScreen(detectionResult: widget.result),
                   ),
                 );
               },
@@ -236,7 +232,9 @@ class _ResultScreenState extends State<ResultScreen> {
                 padding: const EdgeInsets.symmetric(vertical: 16),
                 side: const BorderSide(color: AppColors.primaryColor, width: 2),
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(AppDimensions.radiusMedium),
+                  borderRadius: BorderRadius.circular(
+                    AppDimensions.radiusMedium,
+                  ),
                 ),
               ),
             ),
@@ -244,8 +242,7 @@ class _ResultScreenState extends State<ResultScreen> {
             const SizedBox(height: 24),
 
             // All predictions
-            if (widget.result.allPredictions != null)
-              _buildAllPredictions(),
+            if (widget.result.allPredictions != null) _buildAllPredictions(),
 
             const SizedBox(height: 24),
 
@@ -289,16 +286,13 @@ class _ResultScreenState extends State<ResultScreen> {
           children: [
             Row(
               children: [
-                const Icon(
-                  Icons.psychology,
-                  color: AppColors.secondaryColor,
-                ),
+                const Icon(Icons.psychology, color: AppColors.secondaryColor),
                 const SizedBox(width: 8),
                 Text(
                   'AI Recommendations',
                   style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                        fontWeight: FontWeight.bold,
-                      ),
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ],
             ),
@@ -325,15 +319,15 @@ class _ResultScreenState extends State<ResultScreen> {
           children: [
             Text(
               'All Predictions',
-              style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                    fontWeight: FontWeight.bold,
-                  ),
+              style: Theme.of(
+                context,
+              ).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 12),
             ...predictions.map((entry) {
               final diseaseName = DiseaseLabels.labels[entry.key] ?? entry.key;
               final confidence = entry.value;
-              
+
               return Padding(
                 padding: const EdgeInsets.only(bottom: 12),
                 child: Column(
@@ -348,9 +342,8 @@ class _ResultScreenState extends State<ResultScreen> {
                         ),
                         Text(
                           '${(confidence * 100).toStringAsFixed(1)}%',
-                          style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                                fontWeight: FontWeight.bold,
-                              ),
+                          style: Theme.of(context).textTheme.bodySmall
+                              ?.copyWith(fontWeight: FontWeight.bold),
                         ),
                       ],
                     ),
@@ -362,7 +355,8 @@ class _ResultScreenState extends State<ResultScreen> {
                         minHeight: 6,
                         backgroundColor: Colors.grey[200],
                         valueColor: AlwaysStoppedAnimation(
-                          DiseaseLabels.colors[entry.key] ?? AppColors.primaryColor,
+                          DiseaseLabels.colors[entry.key] ??
+                              AppColors.primaryColor,
                         ),
                       ),
                     ),

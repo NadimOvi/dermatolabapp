@@ -75,7 +75,7 @@ class HistoryBloc extends Bloc<HistoryEvent, HistoryState> {
     on<AddToHistoryEvent>(_onAddToHistory);
     on<DeleteFromHistoryEvent>(_onDeleteFromHistory);
     on<ClearHistoryEvent>(_onClearHistory);
-    
+
     // Initialize database
     _initDatabase();
   }
@@ -89,8 +89,7 @@ class HistoryBloc extends Bloc<HistoryEvent, HistoryState> {
         path,
         version: 1,
         onCreate: (db, version) {
-          return db.execute(
-            '''
+          return db.execute('''
             CREATE TABLE history(
               id TEXT PRIMARY KEY,
               image_path TEXT,
@@ -100,8 +99,7 @@ class HistoryBloc extends Bloc<HistoryEvent, HistoryState> {
               timestamp INTEGER,
               ai_recommendations TEXT
             )
-            ''',
-          );
+            ''');
         },
       );
     } catch (e) {
@@ -128,7 +126,9 @@ class HistoryBloc extends Bloc<HistoryEvent, HistoryState> {
       if (maps.isEmpty) {
         emit(HistoryEmpty());
       } else {
-        final history = maps.map((map) => DetectionResult.fromMap(map)).toList();
+        final history = maps
+            .map((map) => DetectionResult.fromMap(map))
+            .toList();
         emit(HistoryLoaded(history));
       }
     } catch (e) {

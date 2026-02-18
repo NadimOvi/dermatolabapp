@@ -8,10 +8,7 @@ import '../utils/constants.dart';
 class DoctorListScreen extends StatefulWidget {
   final DetectionResult detectionResult;
 
-  const DoctorListScreen({
-    super.key,
-    required this.detectionResult,
-  });
+  const DoctorListScreen({super.key, required this.detectionResult});
 
   @override
   State<DoctorListScreen> createState() => _DoctorListScreenState();
@@ -52,35 +49,37 @@ class _DoctorListScreenState extends State<DoctorListScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text(AppStrings.findDoctors),
-      ),
+      appBar: AppBar(title: const Text(AppStrings.findDoctors)),
       body: _isLoading
           ? const Center(child: CircularProgressIndicator())
           : _error != null
-              ? Center(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const Icon(Icons.error_outline, size: 64, color: AppColors.errorColor),
-                      const SizedBox(height: 16),
-                      Text(_error!),
-                      ElevatedButton(
-                        onPressed: _loadNearbyDoctors,
-                        child: const Text('Retry'),
-                      ),
-                    ],
+          ? Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Icon(
+                    Icons.error_outline,
+                    size: 64,
+                    color: AppColors.errorColor,
                   ),
-                )
-              : _doctors == null || _doctors!.isEmpty
-                  ? const Center(child: Text('No dermatologists found nearby'))
-                  : ListView.builder(
-                      padding: const EdgeInsets.all(AppDimensions.paddingMedium),
-                      itemCount: _doctors!.length,
-                      itemBuilder: (context, index) {
-                        return DoctorCard(doctor: _doctors![index]);
-                      },
-                    ),
+                  const SizedBox(height: 16),
+                  Text(_error!),
+                  ElevatedButton(
+                    onPressed: _loadNearbyDoctors,
+                    child: const Text('Retry'),
+                  ),
+                ],
+              ),
+            )
+          : _doctors == null || _doctors!.isEmpty
+          ? const Center(child: Text('No dermatologists found nearby'))
+          : ListView.builder(
+              padding: const EdgeInsets.all(AppDimensions.paddingMedium),
+              itemCount: _doctors!.length,
+              itemBuilder: (context, index) {
+                return DoctorCard(doctor: _doctors![index]);
+              },
+            ),
     );
   }
 }

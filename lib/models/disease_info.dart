@@ -61,16 +61,16 @@ class DiseaseInfo extends Equatable {
 
   @override
   List<Object?> get props => [
-        id,
-        name,
-        code,
-        shortDescription,
-        fullDescription,
-        imageUrl,
-        symptoms,
-        causes,
-        riskFactors,
-        severity,
-        lastUpdated,
-      ];
+    id,
+    name,
+    code,
+    shortDescription,
+    fullDescription,
+    imageUrl,
+    symptoms,
+    causes,
+    riskFactors,
+    severity,
+    lastUpdated,
+  ];
 }

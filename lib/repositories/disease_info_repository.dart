@@ -58,7 +58,8 @@ BCC grows slowly and rarely spreads (metastasizes) to other parts of the body. H
 
 The good news is that BCC is highly treatable, especially when caught early. Treatment options include surgical removal, topical medications, and radiation therapy.
 ''',
-        imageUrl: 'https://via.placeholder.com/400x300?text=Basal+Cell+Carcinoma',
+        imageUrl:
+            'https://via.placeholder.com/400x300?text=Basal+Cell+Carcinoma',
         symptoms: [
           'Pearly or waxy bump',
           'Flat, flesh-colored lesion',
@@ -102,16 +103,8 @@ While these lesions don't need treatment, it's important to have any new or chan
           'Slightly raised',
           'May have rough texture',
         ],
-        causes: [
-          'Aging process',
-          'Sun exposure',
-          'Genetic factors',
-        ],
-        riskFactors: [
-          'Age over 50',
-          'Family history',
-          'Fair skin',
-        ],
+        causes: ['Aging process', 'Sun exposure', 'Genetic factors'],
+        riskFactors: ['Age over 50', 'Family history', 'Fair skin'],
         severity: 'Low',
         lastUpdated: DateTime.now().subtract(const Duration(days: 14)),
       ),
@@ -135,11 +128,7 @@ These growths are permanent but harmless. They may change slightly in color or s
           'May be itchy or tender',
           'Usually 0.5-1 cm in diameter',
         ],
-        causes: [
-          'Minor skin trauma',
-          'Insect bites',
-          'Unknown factors',
-        ],
+        causes: ['Minor skin trauma', 'Insect bites', 'Unknown factors'],
         riskFactors: [
           'Female gender',
           'Young to middle-aged adults',
@@ -169,11 +158,7 @@ Early-stage melanoma can often be cured with surgical removal. Advanced melanoma
           'Diameter larger than 6mm',
           'Evolving size, shape, or color',
         ],
-        causes: [
-          'UV radiation damage',
-          'Genetic mutations',
-          'Family history',
-        ],
+        causes: ['UV radiation damage', 'Genetic mutations', 'Family history'],
         riskFactors: [
           'Excessive sun exposure',
           'History of sunburns',
@@ -207,11 +192,7 @@ While moles are generally harmless, it's important to monitor them for changes t
           'Usually less than 6mm diameter',
           'Stable over time',
         ],
-        causes: [
-          'Genetic factors',
-          'Sun exposure',
-          'Normal skin development',
-        ],
+        causes: ['Genetic factors', 'Sun exposure', 'Normal skin development'],
         riskFactors: [
           'Fair skin',
           'Sun exposure during childhood',

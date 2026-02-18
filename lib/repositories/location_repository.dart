@@ -5,7 +5,8 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import '../models/doctor_info.dart';
 
 class LocationRepository {
-  static final String _googleMapsApiKey = dotenv.env['GOOGLE_MAPS_API_KEY'] ?? '';
+  static final String _googleMapsApiKey =
+      dotenv.env['GOOGLE_MAPS_API_KEY'] ?? '';
 
   Future<Position> getCurrentLocation() async {
     bool serviceEnabled;
@@ -54,7 +55,7 @@ class LocationRepository {
 
     try {
       final radiusInMeters = radiusInKm * 1000;
-      
+
       final url = Uri.parse(
         'https://maps.googleapis.com/maps/api/place/nearbysearch/json'
         '?location=$latitude,$longitude'
@@ -68,16 +69,18 @@ class LocationRepository {
 
       if (response.statusCode == 200) {
         final data = jsonDecode(response.body);
-        
+
         if (data['status'] == 'OK') {
           final results = data['results'] as List;
-          
+
           return results
-              .map((json) => DoctorInfo.fromGooglePlaces(
-                    json as Map<String, dynamic>,
-                    latitude!,
-                    longitude!,
-                  ))
+              .map(
+                (json) => DoctorInfo.fromGooglePlaces(
+                  json as Map<String, dynamic>,
+                  latitude!,
+                  longitude!,
+                ),
+              )
               .toList()
             ..sort((a, b) => a.distance.compareTo(b.distance));
         } else if (data['status'] == 'ZERO_RESULTS') {
@@ -86,7 +89,9 @@ class LocationRepository {
           throw Exception('Error from Google Places API: ${data['status']}');
         }
       } else {
-        throw Exception('Failed to load nearby doctors: ${response.statusCode}');
+        throw Exception(
+          'Failed to load nearby doctors: ${response.statusCode}',
+        );
       }
     } catch (e) {
       throw Exception('Error finding nearby doctors: $e');
@@ -108,12 +113,12 @@ class LocationRepository {
 
       if (response.statusCode == 200) {
         final data = jsonDecode(response.body);
-        
+
         if (data['status'] == 'OK' && data['results'].isNotEmpty) {
           return data['results'][0]['formatted_address'] as String;
         }
       }
-      
+
       return 'Address not available';
     } catch (e) {
       return 'Address not available';

@@ -35,8 +35,8 @@ class _DetectionScreenState extends State<DetectionScreen> {
         // Trigger detection
         if (mounted) {
           context.read<DetectionBloc>().add(
-                DetectDiseaseEvent(_selectedImage!),
-              );
+            DetectDiseaseEvent(_selectedImage!),
+          );
         }
       }
     } catch (e) {
@@ -54,17 +54,16 @@ class _DetectionScreenState extends State<DetectionScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text(AppStrings.scanSkin),
-      ),
+      appBar: AppBar(title: const Text(AppStrings.scanSkin)),
       body: BlocConsumer<DetectionBloc, DetectionState>(
         listener: (context, state) {
-          if (state is DetectionSuccess || state is DetectionWithAIRecommendations) {
+          if (state is DetectionSuccess ||
+              state is DetectionWithAIRecommendations) {
             // Navigate to result screen
             final result = state is DetectionSuccess
                 ? state.result
                 : (state as DetectionWithAIRecommendations).result;
-            
+
             Navigator.push(
               context,
               MaterialPageRoute(
@@ -102,8 +101,8 @@ class _DetectionScreenState extends State<DetectionScreen> {
                   Text(
                     'Please wait while we analyze your image...',
                     style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                          color: AppColors.textSecondary,
-                        ),
+                      color: AppColors.textSecondary,
+                    ),
                   ),
                 ],
               ),
@@ -120,7 +119,9 @@ class _DetectionScreenState extends State<DetectionScreen> {
                   height: 400,
                   decoration: BoxDecoration(
                     color: AppColors.cardColor,
-                    borderRadius: BorderRadius.circular(AppDimensions.radiusLarge),
+                    borderRadius: BorderRadius.circular(
+                      AppDimensions.radiusLarge,
+                    ),
                     boxShadow: [
                       BoxShadow(
                         color: Colors.black.withOpacity(0.05),
@@ -142,26 +143,23 @@ class _DetectionScreenState extends State<DetectionScreen> {
                               const SizedBox(height: 16),
                               Text(
                                 'No image selected',
-                                style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                                      color: AppColors.textSecondary,
-                                    ),
+                                style: Theme.of(context).textTheme.titleMedium
+                                    ?.copyWith(color: AppColors.textSecondary),
                               ),
                               const SizedBox(height: 8),
                               Text(
                                 'Take a photo or choose from gallery',
-                                style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                                      color: Colors.grey,
-                                    ),
+                                style: Theme.of(context).textTheme.bodySmall
+                                    ?.copyWith(color: Colors.grey),
                               ),
                             ],
                           ),
                         )
                       : ClipRRect(
-                          borderRadius: BorderRadius.circular(AppDimensions.radiusLarge),
-                          child: Image.file(
-                            _selectedImage!,
-                            fit: BoxFit.cover,
+                          borderRadius: BorderRadius.circular(
+                            AppDimensions.radiusLarge,
                           ),
+                          child: Image.file(_selectedImage!, fit: BoxFit.cover),
                         ),
                 ),
 
@@ -177,7 +175,9 @@ class _DetectionScreenState extends State<DetectionScreen> {
                     foregroundColor: Colors.white,
                     padding: const EdgeInsets.symmetric(vertical: 16),
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(AppDimensions.radiusMedium),
+                      borderRadius: BorderRadius.circular(
+                        AppDimensions.radiusMedium,
+                      ),
                     ),
                   ),
                 ),
@@ -192,9 +192,14 @@ class _DetectionScreenState extends State<DetectionScreen> {
                   style: OutlinedButton.styleFrom(
                     foregroundColor: AppColors.primaryColor,
                     padding: const EdgeInsets.symmetric(vertical: 16),
-                    side: const BorderSide(color: AppColors.primaryColor, width: 2),
+                    side: const BorderSide(
+                      color: AppColors.primaryColor,
+                      width: 2,
+                    ),
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(AppDimensions.radiusMedium),
+                      borderRadius: BorderRadius.circular(
+                        AppDimensions.radiusMedium,
+                      ),
                     ),
                   ),
                 ),
@@ -206,7 +211,9 @@ class _DetectionScreenState extends State<DetectionScreen> {
                   padding: const EdgeInsets.all(16),
                   decoration: BoxDecoration(
                     color: AppColors.primaryColor.withOpacity(0.1),
-                    borderRadius: BorderRadius.circular(AppDimensions.radiusMedium),
+                    borderRadius: BorderRadius.circular(
+                      AppDimensions.radiusMedium,
+                    ),
                     border: Border.all(
                       color: AppColors.primaryColor.withOpacity(0.3),
                     ),
@@ -234,7 +241,9 @@ class _DetectionScreenState extends State<DetectionScreen> {
                       _buildTip('Take photos in good lighting'),
                       _buildTip('Ensure the affected area is clearly visible'),
                       _buildTip('Avoid blurry or dark images'),
-                      _buildTip('Focus on the specific lesion or affected area'),
+                      _buildTip(
+                        'Focus on the specific lesion or affected area',
+                      ),
                     ],
                   ),
                 ),
@@ -246,7 +255,9 @@ class _DetectionScreenState extends State<DetectionScreen> {
                   padding: const EdgeInsets.all(16),
                   decoration: BoxDecoration(
                     color: AppColors.warningColor.withOpacity(0.1),
-                    borderRadius: BorderRadius.circular(AppDimensions.radiusMedium),
+                    borderRadius: BorderRadius.circular(
+                      AppDimensions.radiusMedium,
+                    ),
                   ),
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -260,9 +271,8 @@ class _DetectionScreenState extends State<DetectionScreen> {
                       Expanded(
                         child: Text(
                           'This app is for educational purposes only and should not replace professional medical diagnosis. Always consult with a qualified dermatologist.',
-                          style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                                color: AppColors.textSecondary,
-                              ),
+                          style: Theme.of(context).textTheme.bodySmall
+                              ?.copyWith(color: AppColors.textSecondary),
                         ),
                       ),
                     ],

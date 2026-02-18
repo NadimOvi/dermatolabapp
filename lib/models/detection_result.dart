@@ -69,13 +69,13 @@ class DetectionResult extends Equatable {
 
   @override
   List<Object?> get props => [
-        id,
-        imagePath,
-        diseaseName,
-        diseaseCode,
-        confidence,
-        timestamp,
-        aiRecommendations,
-        allPredictions,
-      ];
+    id,
+    imagePath,
+    diseaseName,
+    diseaseCode,
+    confidence,
+    timestamp,
+    aiRecommendations,
+    allPredictions,
+  ];
 }

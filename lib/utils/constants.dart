@@ -18,29 +18,29 @@ class AppStrings {
   static const String infoTab = 'Info';
   static const String detectTab = 'Detect';
   static const String historyTab = 'History';
-  
+
   // Info Screen
   static const String recentDiseaseInfo = 'Recent Skin Disease Info';
   static const String learMore = 'Learn More';
-  
+
   // Detection Screen
   static const String scanSkin = 'Scan Your Skin';
   static const String takePhoto = 'Take Photo';
   static const String chooseGallery = 'Choose from Gallery';
   static const String analyzing = 'Analyzing...';
-  
+
   // Result Screen
   static const String results = 'Results';
   static const String confidence = 'Confidence';
   static const String treatment = 'AI Recommendations';
   static const String findDoctors = 'Find Nearby Doctors';
   static const String saveToHistory = 'Save to History';
-  
+
   // History Screen
   static const String scanHistory = 'Scan History';
   static const String noHistory = 'No scan history yet';
   static const String startScanning = 'Start scanning to see your history';
-  
+
   // Errors
   static const String errorLoadingModel = 'Error loading ML model';
   static const String errorProcessingImage = 'Error processing image';
@@ -60,13 +60,20 @@ class DiseaseLabels {
   };
 
   static const Map<String, String> descriptions = {
-    'akiec': 'Actinic keratoses and intraepithelial carcinoma are common non-invasive variants of squamous cell carcinoma that can be treated locally without surgery.',
-    'bcc': 'Basal cell carcinoma is a common variant of epithelial skin cancer that rarely metastasizes but grows destructively if untreated.',
-    'bkl': 'Benign keratosis-like lesions include solar lentigines, seborrheic keratoses and lichen-planus like keratoses. These are harmless skin lesions.',
-    'df': 'Dermatofibroma is a benign skin lesion regarded as either a benign proliferation or an inflammatory reaction to minimal trauma.',
-    'mel': 'Melanoma is a malignant neoplasm derived from melanocytes. If excised in an early stage it can be cured by simple surgical excision.',
-    'nv': 'Melanocytic nevi are benign neoplasms of melanocytes that appear in various variants and are generally harmless.',
-    'vasc': 'Vascular lesions range from cherry angiomas to angiokeratomas and pyogenic granulomas. These are usually benign.',
+    'akiec':
+        'Actinic keratoses and intraepithelial carcinoma are common non-invasive variants of squamous cell carcinoma that can be treated locally without surgery.',
+    'bcc':
+        'Basal cell carcinoma is a common variant of epithelial skin cancer that rarely metastasizes but grows destructively if untreated.',
+    'bkl':
+        'Benign keratosis-like lesions include solar lentigines, seborrheic keratoses and lichen-planus like keratoses. These are harmless skin lesions.',
+    'df':
+        'Dermatofibroma is a benign skin lesion regarded as either a benign proliferation or an inflammatory reaction to minimal trauma.',
+    'mel':
+        'Melanoma is a malignant neoplasm derived from melanocytes. If excised in an early stage it can be cured by simple surgical excision.',
+    'nv':
+        'Melanocytic nevi are benign neoplasms of melanocytes that appear in various variants and are generally harmless.',
+    'vasc':
+        'Vascular lesions range from cherry angiomas to angiokeratomas and pyogenic granulomas. These are usually benign.',
   };
 
   static const Map<String, Color> colors = {

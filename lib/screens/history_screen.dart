@@ -51,8 +51,8 @@ class _HistoryScreenState extends State<HistoryScreen> {
                   Text(
                     AppStrings.startScanning,
                     style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                          color: AppColors.textSecondary,
-                        ),
+                      color: AppColors.textSecondary,
+                    ),
                   ),
                 ],
               ),
@@ -72,8 +72,8 @@ class _HistoryScreenState extends State<HistoryScreen> {
                     result: state.history[index],
                     onDelete: () {
                       context.read<HistoryBloc>().add(
-                            DeleteFromHistoryEvent(state.history[index].id),
-                          );
+                        DeleteFromHistoryEvent(state.history[index].id),
+                      );
                     },
                   );
                 },

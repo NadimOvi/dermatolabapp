@@ -6,11 +6,7 @@ class DiseaseCard extends StatelessWidget {
   final DiseaseInfo disease;
   final VoidCallback onTap;
 
-  const DiseaseCard({
-    super.key,
-    required this.disease,
-    required this.onTap,
-  });
+  const DiseaseCard({super.key, required this.disease, required this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -47,15 +43,15 @@ class DiseaseCard extends StatelessWidget {
                     Text(
                       disease.name,
                       style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                            fontWeight: FontWeight.bold,
-                          ),
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                     const SizedBox(height: 4),
                     Text(
                       disease.shortDescription,
                       style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                            color: AppColors.textSecondary,
-                          ),
+                        color: AppColors.textSecondary,
+                      ),
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                     ),

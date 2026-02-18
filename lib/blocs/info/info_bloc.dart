@@ -80,7 +80,7 @@ class InfoBloc extends Bloc<InfoEvent, InfoState> {
     emit(InfoLoading());
 
     try {
-      final diseases = await diseaseInfoRepository.getRecentDiseaseInfo();
+      final diseases = await diseaseInfoRepository.getAllDiseaseInfo();
       emit(InfoLoaded(diseases));
     } catch (e) {
       emit(InfoError(e.toString()));
@@ -92,7 +92,7 @@ class InfoBloc extends Bloc<InfoEvent, InfoState> {
     Emitter<InfoState> emit,
   ) async {
     try {
-      final diseases = await diseaseInfoRepository.getRecentDiseaseInfo();
+      final diseases = await diseaseInfoRepository.getAllDiseaseInfo();
       emit(InfoLoaded(diseases));
     } catch (e) {
       emit(InfoError(e.toString()));

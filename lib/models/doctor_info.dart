@@ -37,7 +37,7 @@ class DoctorInfo extends Equatable {
     final location = json['geometry']['location'];
     final lat = location['lat'] as double;
     final lng = location['lng'] as double;
-    
+
     // Calculate distance using Haversine formula
     final distance = _calculateDistance(userLat, userLng, lat, lng);
 
@@ -45,7 +45,10 @@ class DoctorInfo extends Equatable {
       id: json['place_id'] as String,
       name: json['name'] as String,
       specialty: 'Dermatologist',
-      address: json['vicinity'] as String? ?? json['formatted_address'] as String? ?? 'Address not available',
+      address:
+          json['vicinity'] as String? ??
+          json['formatted_address'] as String? ??
+          'Address not available',
       latitude: lat,
       longitude: lng,
       distance: distance,
@@ -65,23 +68,26 @@ class DoctorInfo extends Equatable {
     double lon2,
   ) {
     const double earthRadius = 6371; // in kilometers
-    
+
     final dLat = _toRadians(lat2 - lat1);
     final dLon = _toRadians(lon2 - lon1);
-    
-    final a = _sin(dLat / 2) * _sin(dLat / 2) +
+
+    final a =
+        _sin(dLat / 2) * _sin(dLat / 2) +
         _cos(_toRadians(lat1)) *
             _cos(_toRadians(lat2)) *
             _sin(dLon / 2) *
             _sin(dLon / 2);
-    
+
     final c = 2 * _atan2(_sqrt(a), _sqrt(1 - a));
-    
+
     return earthRadius * c;
   }
 
-  static double _toRadians(double degrees) => degrees * (3.141592653589793 / 180);
-  static double _sin(double x) => x - (x * x * x) / 6 + (x * x * x * x * x) / 120;
+  static double _toRadians(double degrees) =>
+      degrees * (3.141592653589793 / 180);
+  static double _sin(double x) =>
+      x - (x * x * x) / 6 + (x * x * x * x * x) / 120;
   static double _cos(double x) => 1 - (x * x) / 2 + (x * x * x * x) / 24;
   static double _sqrt(double x) {
     if (x == 0) return 0;
@@ -91,6 +97,7 @@ class DoctorInfo extends Equatable {
     }
     return guess;
   }
+
   static double _atan2(double y, double x) {
     if (x > 0) return _atan(y / x);
     if (x < 0 && y >= 0) return _atan(y / x) + 3.141592653589793;
@@ -99,23 +106,24 @@ class DoctorInfo extends Equatable {
     if (x == 0 && y < 0) return -3.141592653589793 / 2;
     return 0;
   }
+
   static double _atan(double x) {
     return x - (x * x * x) / 3 + (x * x * x * x * x) / 5;
   }
 
   @override
   List<Object?> get props => [
-        id,
-        name,
-        specialty,
-        address,
-        latitude,
-        longitude,
-        distance,
-        rating,
-        totalRatings,
-        phoneNumber,
-        isOpenNow,
-        photoUrl,
-      ];
+    id,
+    name,
+    specialty,
+    address,
+    latitude,
+    longitude,
+    distance,
+    rating,
+    totalRatings,
+    phoneNumber,
+    isOpenNow,
+    photoUrl,
+  ];
 }

@@ -24,9 +24,7 @@ class InfoScreen extends StatelessWidget {
       body: BlocBuilder<InfoBloc, InfoState>(
         builder: (context, state) {
           if (state is InfoLoading) {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
+            return const Center(child: CircularProgressIndicator());
           }
 
           if (state is InfoError) {
@@ -48,8 +46,8 @@ class InfoScreen extends StatelessWidget {
                   Text(
                     state.error,
                     style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                          color: AppColors.textSecondary,
-                        ),
+                      color: AppColors.textSecondary,
+                    ),
                     textAlign: TextAlign.center,
                   ),
                   const SizedBox(height: 24),
@@ -77,25 +75,27 @@ class InfoScreen extends StatelessWidget {
                   Text(
                     AppStrings.recentDiseaseInfo,
                     style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                          fontWeight: FontWeight.bold,
-                          color: AppColors.textPrimary,
-                        ),
+                      fontWeight: FontWeight.bold,
+                      color: AppColors.textPrimary,
+                    ),
                   ),
                   const SizedBox(height: 8),
                   Text(
                     'Stay informed about common skin conditions',
                     style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                          color: AppColors.textSecondary,
-                        ),
+                      color: AppColors.textSecondary,
+                    ),
                   ),
                   const SizedBox(height: 24),
-                  ...state.diseases.map((disease) => DiseaseCard(
-                        disease: disease,
-                        onTap: () {
-                          // Navigate to detailed info screen
-                          _showDiseaseDetails(context, disease);
-                        },
-                      )),
+                  ...state.diseases.map(
+                    (disease) => DiseaseCard(
+                      disease: disease,
+                      onTap: () {
+                        // Navigate to detailed info screen
+                        _showDiseaseDetails(context, disease);
+                      },
+                    ),
+                  ),
                 ],
               ),
             );
@@ -112,9 +112,7 @@ class InfoScreen extends StatelessWidget {
       context: context,
       isScrollControlled: true,
       shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(
-          top: Radius.circular(20),
-        ),
+        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
       ),
       builder: (context) => DraggableScrollableSheet(
         initialChildSize: 0.9,
@@ -144,7 +142,9 @@ class InfoScreen extends StatelessWidget {
                     Container(
                       padding: const EdgeInsets.all(12),
                       decoration: BoxDecoration(
-                        color: DiseaseLabels.colors[disease.code]?.withOpacity(0.1),
+                        color: DiseaseLabels.colors[disease.code]?.withOpacity(
+                          0.1,
+                        ),
                         borderRadius: BorderRadius.circular(12),
                       ),
                       child: Icon(
@@ -160,9 +160,8 @@ class InfoScreen extends StatelessWidget {
                         children: [
                           Text(
                             disease.name,
-                            style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                                  fontWeight: FontWeight.bold,
-                                ),
+                            style: Theme.of(context).textTheme.headlineSmall
+                                ?.copyWith(fontWeight: FontWeight.bold),
                           ),
                           const SizedBox(height: 4),
                           Container(
@@ -189,11 +188,7 @@ class InfoScreen extends StatelessWidget {
                   ],
                 ),
                 const SizedBox(height: 24),
-                _buildSection(
-                  context,
-                  'Description',
-                  disease.fullDescription,
-                ),
+                _buildSection(context, 'Description', disease.fullDescription),
                 const SizedBox(height: 16),
                 _buildListSection(
                   context,
@@ -255,17 +250,17 @@ class InfoScreen extends StatelessWidget {
       children: [
         Text(
           title,
-          style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                fontWeight: FontWeight.bold,
-              ),
+          style: Theme.of(
+            context,
+          ).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
         ),
         const SizedBox(height: 8),
         Text(
           content,
           style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                color: AppColors.textSecondary,
-                height: 1.5,
-              ),
+            color: AppColors.textSecondary,
+            height: 1.5,
+          ),
         ),
       ],
     );
@@ -286,36 +281,38 @@ class InfoScreen extends StatelessWidget {
             const SizedBox(width: 8),
             Text(
               title,
-              style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                    fontWeight: FontWeight.bold,
-                  ),
+              style: Theme.of(
+                context,
+              ).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
             ),
           ],
         ),
         const SizedBox(height: 12),
-        ...items.map((item) => Padding(
-              padding: const EdgeInsets.only(bottom: 8),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const Padding(
-                    padding: EdgeInsets.only(top: 6),
-                    child: Icon(
-                      Icons.circle,
-                      size: 6,
-                      color: AppColors.primaryColor,
-                    ),
+        ...items.map(
+          (item) => Padding(
+            padding: const EdgeInsets.only(bottom: 8),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Padding(
+                  padding: EdgeInsets.only(top: 6),
+                  child: Icon(
+                    Icons.circle,
+                    size: 6,
+                    color: AppColors.primaryColor,
                   ),
-                  const SizedBox(width: 12),
-                  Expanded(
-                    child: Text(
-                      item,
-                      style: Theme.of(context).textTheme.bodyMedium,
-                    ),
+                ),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: Text(
+                    item,
+                    style: Theme.of(context).textTheme.bodyMedium,
                   ),
-                ],
-              ),
-            )),
+                ),
+              ],
+            ),
+          ),
+        ),
       ],
     );
   }

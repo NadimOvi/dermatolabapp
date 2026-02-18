@@ -16,17 +16,9 @@ class MLRepository {
     try {
       // Load the TFLite model
       _interpreter = await Interpreter.fromAsset(ModelConstants.modelPath);
-      
+
       // Load labels
-      _labels = [
-        'akiec',
-        'bcc',
-        'bkl',
-        'df',
-        'mel',
-        'nv',
-        'vasc',
-      ];
+      _labels = ['akiec', 'bcc', 'bkl', 'df', 'mel', 'nv', 'vasc'];
 
       _isInitialized = true;
     } catch (e) {
@@ -46,17 +38,19 @@ class MLRepository {
     try {
       // Preprocess image
       final input = await _preprocessImage(imageFile);
-      
-      // Prepare output buffer
-      final output = List.filled(1 * ModelConstants.numClasses, 0.0)
-          .reshape([1, ModelConstants.numClasses]);
+
+      // Prepare output buffer as a 2D list [1][numClasses]
+      final output = List.generate(
+        1,
+        (_) => List.filled(ModelConstants.numClasses, 0.0),
+      );
 
       // Run inference
       _interpreter!.run(input, output);
 
-      // Get predictions
-      final predictions = output[0] as List<double>;
-      
+      // Get predictions from first (and only) batch
+      final predictions = output[0];
+
       // Create map of all predictions
       final allPredictions = <String, double>{};
       for (int i = 0; i < _labels!.length; i++) {
@@ -66,7 +60,7 @@ class MLRepository {
       // Get top prediction
       double maxConfidence = 0.0;
       int maxIndex = 0;
-      
+
       for (int i = 0; i < predictions.length; i++) {
         if (predictions[i] > maxConfidence) {
           maxConfidence = predictions[i];
@@ -91,7 +85,9 @@ class MLRepository {
     }
   }
 
-  Future<List<List<List<List<double>>>>> _preprocessImage(File imageFile) async {
+  Future<List<List<List<List<double>>>>> _preprocessImage(
+    File imageFile,
+  ) async {
     // Read image file
     final bytes = await imageFile.readAsBytes();
     img.Image? image = img.decodeImage(bytes);
@@ -112,17 +108,10 @@ class MLRepository {
       1,
       (i) => List.generate(
         ModelConstants.inputSize,
-        (y) => List.generate(
-          ModelConstants.inputSize,
-          (x) {
-            final pixel = resizedImage.getPixel(x, y);
-            return [
-              pixel.r / 255.0,
-              pixel.g / 255.0,
-              pixel.b / 255.0,
-            ];
-          },
-        ),
+        (y) => List.generate(ModelConstants.inputSize, (x) {
+          final pixel = resizedImage.getPixel(x, y);
+          return [pixel.r / 255.0, pixel.g / 255.0, pixel.b / 255.0];
+        }),
       ),
     );
 
