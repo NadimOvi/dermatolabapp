@@ -1,11 +1,3 @@
-// ============================================================================
-// DETECTION SCREEN (Fixed) — passes BodyPart through to ResultScreen
-// File: lib/screens/detection_screen.dart
-//
-// FIX 1: Constructor now accepts optional BodyPart parameter
-// FIX 2: ResultScreen navigation includes bodyPart
-// ============================================================================
-
 import 'dart:io';
 import 'dart:typed_data';
 import 'dart:math' as math;
@@ -18,7 +10,7 @@ import 'package:path/path.dart' as p;
 import 'package:path_provider/path_provider.dart';
 import '../blocs/detection/detection_bloc.dart';
 import 'result_screen.dart';
-import 'body_part_screen.dart'; // ← import BodyPart
+import 'body_part_screen.dart';
 
 class _C {
   static const bg = Color(0xFF0F0F14);
@@ -34,7 +26,6 @@ class _C {
 }
 
 class DetectionScreen extends StatefulWidget {
-  // ✅ FIX 1: Accept the selected body part
   final BodyPart? bodyPart;
 
   const DetectionScreen({super.key, this.bodyPart});
@@ -357,11 +348,8 @@ class _DetectionScreenState extends State<DetectionScreen>
             Navigator.pushReplacement(
               context,
               PageRouteBuilder(
-                // ✅ FIX 2: Pass widget.bodyPart to ResultScreen
-                pageBuilder: (_, a, __) => ResultScreen(
-                  result: result,
-                  bodyPart: widget.bodyPart, // ← THIS was missing before
-                ),
+                pageBuilder: (_, a, __) =>
+                    ResultScreen(result: result, bodyPart: widget.bodyPart),
                 transitionDuration: const Duration(milliseconds: 300),
                 transitionsBuilder: (_, anim, __, child) =>
                     FadeTransition(opacity: anim, child: child),
@@ -455,7 +443,6 @@ class _DetectionScreenState extends State<DetectionScreen>
           child: _buildBottomControls(),
         ),
 
-        // ✅ FIX 3: Show selected body part badge on camera screen
         if (widget.bodyPart != null)
           Positioned(
             top: top + 60,
@@ -916,24 +903,6 @@ class _DetectionScreenState extends State<DetectionScreen>
     );
   }
 }
-
-// ══════════════════════════════════════════════════════════════════════════════
-// UPDATE BodyPartSelectorScreen.onConfirm to navigate to DetectionScreen:
-//
-//   BodyPartSelectorScreen(
-//     onConfirm: (part, fromGallery) {
-//       if (fromGallery) {
-//         // pick from gallery and run detection directly
-//       } else {
-//         Navigator.push(context, MaterialPageRoute(
-//           builder: (_) => DetectionScreen(bodyPart: part), // ← pass it here
-//         ));
-//       }
-//     },
-//   )
-// ══════════════════════════════════════════════════════════════════════════════
-
-// ─── Painters & helpers (unchanged from original) ────────────────────────────
 
 class _MaskClipper extends CustomClipper<Path> {
   final Rect frameRect;

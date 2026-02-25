@@ -1,11 +1,7 @@
-// ============================================================================
-// FILE: lib/widgets/confidence_meter.dart
-// ============================================================================
-
 import 'package:flutter/material.dart';
 
 class ConfidenceMeter extends StatefulWidget {
-  final double confidence; // 0.0 to 1.0
+  final double confidence;
   final double size;
   final double strokeWidth;
 
@@ -32,10 +28,10 @@ class _ConfidenceMeterState extends State<ConfidenceMeter>
       duration: const Duration(milliseconds: 1500),
       vsync: this,
     );
-    _animation =
-        Tween<double>(begin: 0, end: widget.confidence).animate(
-      CurvedAnimation(parent: _controller, curve: Curves.easeOutCubic),
-    );
+    _animation = Tween<double>(
+      begin: 0,
+      end: widget.confidence,
+    ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeOutCubic));
     _controller.forward();
   }
 
@@ -63,7 +59,6 @@ class _ConfidenceMeterState extends State<ConfidenceMeter>
           child: Stack(
             alignment: Alignment.center,
             children: [
-              // Background circle
               SizedBox(
                 width: widget.size,
                 height: widget.size,
@@ -74,7 +69,7 @@ class _ConfidenceMeterState extends State<ConfidenceMeter>
                   valueColor: AlwaysStoppedAnimation(Colors.grey[200]!),
                 ),
               ),
-              // Progress circle
+
               SizedBox(
                 width: widget.size,
                 height: widget.size,
@@ -85,7 +80,7 @@ class _ConfidenceMeterState extends State<ConfidenceMeter>
                   valueColor: AlwaysStoppedAnimation(_getColor(value)),
                 ),
               ),
-              // Center text
+
               Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [

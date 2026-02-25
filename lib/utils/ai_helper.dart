@@ -6,7 +6,6 @@ class AIHelper {
   static final String _apiKey = dotenv.env['OPENAI_API_KEY'] ?? '';
   static const String _apiUrl = 'https://api.openai.com/v1/chat/completions';
 
-  /// Generates treatment recommendations for a detected disease
   static Future<String> getTreatmentRecommendations({
     required String diseaseName,
     required String diseaseDescription,

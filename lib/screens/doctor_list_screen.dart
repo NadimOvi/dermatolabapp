@@ -292,9 +292,6 @@ class _DoctorListScreenState extends State<DoctorListScreen>
     return BitmapDescriptor.fromBytes(bytes!.buffer.asUint8List());
   }
 
-  // ── Route drawing ─────────────────────────────────────────────────────────
-  /// Fetches the walking/driving route from user → doctor via Directions API
-  /// and draws it as a styled polyline on the map.
   Future<void> _drawRoute(DoctorInfo doc) async {
     const apiKey = 'AIzaSyBEXp-KjZtn3XPb6S6FF7Z8Bm5onjVTk8I';
     final url =

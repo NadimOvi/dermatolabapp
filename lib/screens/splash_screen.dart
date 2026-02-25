@@ -1,9 +1,3 @@
-// ============================================================================
-// SPLASH SCREEN
-// File: lib/screens/splash/splash_screen.dart
-// Shows for 3 seconds with animated logo, then navigates to dashboard
-// ============================================================================
-
 import 'package:dermatolabapp/screens/dashboard/modern_dashboard_screen.dart';
 import 'package:flutter/material.dart';
 import 'dart:math' as math;
@@ -33,36 +27,30 @@ class _SplashScreenState extends State<SplashScreen>
   void initState() {
     super.initState();
 
-    // Logo animation controller (0.0 - 0.8s)
     _logoController = AnimationController(
       duration: const Duration(milliseconds: 800),
       vsync: this,
     );
 
-    // Text animation controller (0.6 - 1.2s)
     _textController = AnimationController(
       duration: const Duration(milliseconds: 700),
       vsync: this,
     );
 
-    // Pulse animation (loops)
     _pulseController = AnimationController(
       duration: const Duration(milliseconds: 1800),
       vsync: this,
     )..repeat(reverse: true);
 
-    // Rotating decorative circle
     _circleController = AnimationController(
       duration: const Duration(seconds: 8),
       vsync: this,
     )..repeat();
 
-    // Logo: scale from 0.3 → 1.0 with elastic bounce
     _logoScale = Tween<double>(begin: 0.3, end: 1.0).animate(
       CurvedAnimation(parent: _logoController, curve: Curves.elasticOut),
     );
 
-    // Logo: fade in
     _logoOpacity = Tween<double>(begin: 0.0, end: 1.0).animate(
       CurvedAnimation(
         parent: _logoController,
@@ -70,40 +58,34 @@ class _SplashScreenState extends State<SplashScreen>
       ),
     );
 
-    // Text: fade in
     _textOpacity = Tween<double>(
       begin: 0.0,
       end: 1.0,
     ).animate(CurvedAnimation(parent: _textController, curve: Curves.easeIn));
 
-    // Text: slide up from below
     _textSlide = Tween<Offset>(begin: const Offset(0, 0.4), end: Offset.zero)
         .animate(
           CurvedAnimation(parent: _textController, curve: Curves.easeOutCubic),
         );
 
-    // Pulse glow
     _pulse = Tween<double>(begin: 1.0, end: 1.18).animate(
       CurvedAnimation(parent: _pulseController, curve: Curves.easeInOut),
     );
 
-    // Rotating ring
     _circleRotate = Tween<double>(
       begin: 0,
       end: 2 * math.pi,
     ).animate(CurvedAnimation(parent: _circleController, curve: Curves.linear));
 
-    // Start sequence
     _startAnimationSequence();
   }
 
   Future<void> _startAnimationSequence() async {
-    // Logo appears immediately
     await _logoController.forward();
-    // Text slides up shortly after
+
     await Future.delayed(const Duration(milliseconds: 200));
     _textController.forward();
-    // Wait total of 3 seconds before navigating
+
     await Future.delayed(const Duration(milliseconds: 2000));
     _navigate();
   }
@@ -149,7 +131,6 @@ class _SplashScreenState extends State<SplashScreen>
         ),
         child: Stack(
           children: [
-            // Decorative rotating ring (background)
             Center(
               child: AnimatedBuilder(
                 animation: _circleRotate,
@@ -177,7 +158,6 @@ class _SplashScreenState extends State<SplashScreen>
               ),
             ),
 
-            // Outer glow ring
             Center(
               child: AnimatedBuilder(
                 animation: _pulse,
@@ -203,12 +183,10 @@ class _SplashScreenState extends State<SplashScreen>
               ),
             ),
 
-            // Main content
             Center(
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  // Logo circle
                   AnimatedBuilder(
                     animation: Listenable.merge([_logoScale, _logoOpacity]),
                     builder: (_, __) {
@@ -249,14 +227,12 @@ class _SplashScreenState extends State<SplashScreen>
 
                   const SizedBox(height: 36),
 
-                  // App name + tagline
                   SlideTransition(
                     position: _textSlide,
                     child: FadeTransition(
                       opacity: _textOpacity,
                       child: Column(
                         children: [
-                          // App name
                           ShaderMask(
                             shaderCallback: (bounds) => const LinearGradient(
                               colors: [Color(0xFFFFFFFF), Color(0xFFB4B8FF)],
@@ -272,7 +248,7 @@ class _SplashScreenState extends State<SplashScreen>
                             ),
                           ),
                           const SizedBox(height: 8),
-                          // Tagline
+
                           Text(
                             'AI-Powered Skin Analysis',
                             style: TextStyle(
@@ -289,7 +265,6 @@ class _SplashScreenState extends State<SplashScreen>
 
                   const SizedBox(height: 80),
 
-                  // Loading dots
                   FadeTransition(
                     opacity: _textOpacity,
                     child: const _LoadingDots(),
@@ -298,7 +273,6 @@ class _SplashScreenState extends State<SplashScreen>
               ),
             ),
 
-            // Version text at bottom
             Positioned(
               bottom: 40,
               left: 0,
@@ -322,8 +296,6 @@ class _SplashScreenState extends State<SplashScreen>
     );
   }
 }
-
-// ─── Animated loading dots ────────────────────────────────────────────────────
 
 class _LoadingDots extends StatefulWidget {
   const _LoadingDots();
@@ -382,8 +354,6 @@ class _LoadingDotsState extends State<_LoadingDots>
     );
   }
 }
-
-// ─── Dashed circle painter ────────────────────────────────────────────────────
 
 class _DashedCirclePainter extends CustomPainter {
   final Color color;

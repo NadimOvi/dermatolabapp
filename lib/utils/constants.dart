@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-// ⚠️ RENAMED from AppColors → LegacyAppColors to avoid clash with new app_theme.dart
-// Used by: detection_screen.dart, history_screen.dart, doctor_list_screen.dart, result_screen.dart
 class LegacyAppColors {
   static const Color primaryColor = Color(0xFF6C63FF);
   static const Color secondaryColor = Color(0xFF4ECDC4);
@@ -21,29 +19,24 @@ class AppStrings {
   static const String detectTab = 'Detect';
   static const String historyTab = 'History';
 
-  // Info Screen
   static const String recentDiseaseInfo = 'Recent Skin Disease Info';
   static const String learMore = 'Learn More';
 
-  // Detection Screen
   static const String scanSkin = 'Scan Your Skin';
   static const String takePhoto = 'Take Photo';
   static const String chooseGallery = 'Choose from Gallery';
   static const String analyzing = 'Analyzing...';
 
-  // Result Screen
   static const String results = 'Results';
   static const String confidence = 'Confidence';
   static const String treatment = 'AI Recommendations';
   static const String findDoctors = 'Find Nearby Doctors';
   static const String saveToHistory = 'Save to History';
 
-  // History Screen
   static const String scanHistory = 'Scan History';
   static const String noHistory = 'No scan history yet';
   static const String startScanning = 'Start scanning to see your history';
 
-  // Errors
   static const String errorLoadingModel = 'Error loading ML model';
   static const String errorProcessingImage = 'Error processing image';
   static const String errorPermission = 'Permission denied';

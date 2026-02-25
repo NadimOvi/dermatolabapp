@@ -1,7 +1,3 @@
-// ============================================================================
-// FILE: lib/widgets/shimmer_loading.dart
-// ============================================================================
-
 import 'package:flutter/material.dart';
 
 class ShimmerLoading extends StatefulWidget {
@@ -42,11 +38,7 @@ class _ShimmerLoadingState extends State<ShimmerLoading>
             return LinearGradient(
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
-              colors: [
-                Colors.grey[300]!,
-                Colors.grey[100]!,
-                Colors.grey[300]!,
-              ],
+              colors: [Colors.grey[300]!, Colors.grey[100]!, Colors.grey[300]!],
               stops: [
                 _controller.value - 0.3,
                 _controller.value,

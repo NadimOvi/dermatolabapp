@@ -1,7 +1,3 @@
-// ============================================================================
-// FILE: lib/widgets/gradient_button.dart
-// ============================================================================
-
 import 'package:flutter/material.dart';
 
 class GradientButton extends StatefulWidget {
@@ -42,9 +38,10 @@ class _GradientButtonState extends State<GradientButton>
       duration: const Duration(milliseconds: 100),
       vsync: this,
     );
-    _scaleAnimation = Tween<double>(begin: 1.0, end: 0.95).animate(
-      CurvedAnimation(parent: _controller, curve: Curves.easeInOut),
-    );
+    _scaleAnimation = Tween<double>(
+      begin: 1.0,
+      end: 0.95,
+    ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeInOut));
   }
 
   @override

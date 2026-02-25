@@ -1,7 +1,3 @@
-// ============================================================================
-// FILE: lib/widgets/modern_card.dart
-// ============================================================================
-
 import 'package:flutter/material.dart';
 
 class ModernCard extends StatelessWidget {
@@ -31,7 +27,8 @@ class ModernCard extends StatelessWidget {
       decoration: BoxDecoration(
         color: color ?? Theme.of(context).cardTheme.color,
         borderRadius: BorderRadius.circular(borderRadius),
-        boxShadow: shadows ??
+        boxShadow:
+            shadows ??
             [
               BoxShadow(
                 color: Colors.black.withOpacity(0.05),

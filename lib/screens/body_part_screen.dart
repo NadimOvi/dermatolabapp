@@ -1,23 +1,7 @@
-// ============================================================================
-// BODY PART SCREEN
-// File: lib/screens/body_part_screen.dart
-//
-// Uses `body_part_selector` package for the real anatomical SVG body.
-// Everything else (BodyPart enum, BodyView toggle, chips, bottom sheet)
-// is kept exactly from the original file.
-//
-// pubspec.yaml — add:
-//   dependencies:
-//     body_part_selector: ^0.2.0
-//
-// Then: flutter pub get
-// ============================================================================
-
 import 'package:body_part_selector/body_part_selector.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-// ── Palette ───────────────────────────────────────────────────────────────────
 class _C {
   static const bg = Color(0xFF0F0F14);
   static const surface = Color(0xFF1A1A24);
@@ -30,7 +14,6 @@ class _C {
   static const border = Color(0xFF252535);
 }
 
-// ── BodyPart enum — ORIGINAL, unchanged ──────────────────────────────────────
 enum BodyPart {
   head,
   face,
@@ -190,19 +173,13 @@ extension BodyPartX on BodyPart {
   }
 }
 
-// ── BodyView enum — ORIGINAL, kept ───────────────────────────────────────────
-// NOTE: The package's BodyPartSelectorTurnable handles front/back switching
-// internally via swipe. We keep BodyView for the toggle buttons which call
-// _showFront on the package widget.
 enum BodyView { front, back }
 
-// ── Chips data — ORIGINAL structure, kept ────────────────────────────────────
 class _Zone {
   final BodyPart part;
   const _Zone(this.part);
 }
 
-// Front zones chips list (original order)
 const _frontZones = <_Zone>[
   _Zone(BodyPart.head),
   _Zone(BodyPart.face),
@@ -250,62 +227,56 @@ const _backZones = <_Zone>[
   _Zone(BodyPart.rightFoot),
 ];
 
-// ── Bridge: BodyPart enum ↔ package BodyParts ─────────────────────────────────
-
-/// package BodyParts → your BodyPart enum (first truthy wins)
 BodyPart? _fromPkg(BodyParts bp) {
   if (bp.head) return BodyPart.head;
   if (bp.neck) return BodyPart.neck;
   if (bp.leftShoulder) return BodyPart.leftShoulder;
   if (bp.rightShoulder) return BodyPart.rightShoulder;
 
-  // FIXED MAPPINGS:
   if (bp.upperBody) return BodyPart.chest;
-  if (bp.leftUpperArm) return BodyPart.leftUpperArm; // Changed from leftHand
-  if (bp.rightUpperArm) return BodyPart.rightUpperArm; // Changed from rightHand
+  if (bp.leftUpperArm) return BodyPart.leftUpperArm;
+  if (bp.rightUpperArm) return BodyPart.rightUpperArm;
   if (bp.leftLowerArm) return BodyPart.leftForearm;
   if (bp.rightLowerArm) return BodyPart.rightForearm;
   if (bp.leftHand) return BodyPart.leftHand;
   if (bp.rightHand) return BodyPart.rightHand;
   if (bp.abdomen) return BodyPart.abdomen;
   if (bp.lowerBody) return BodyPart.back;
-  if (bp.leftUpperLeg) return BodyPart.leftThigh; // Changed from leftKnee
-  if (bp.rightUpperLeg) return BodyPart.rightThigh; // Changed from leftKnee
+  if (bp.leftUpperLeg) return BodyPart.leftThigh;
+  if (bp.rightUpperLeg) return BodyPart.rightThigh;
   if (bp.leftFoot) return BodyPart.leftFoot;
   if (bp.rightFoot) return BodyPart.rightFoot;
 
   return null;
 }
 
-/// your BodyPart enum → package BodyParts
 BodyParts _toPkg(BodyPart part) {
   switch (part) {
     case BodyPart.chest:
-      return const BodyParts(upperBody: true); // Use upperBody, not chest
+      return const BodyParts(upperBody: true);
     case BodyPart.back:
-      return const BodyParts(lowerBody: true); // Use lowerBody, not back
+      return const BodyParts(lowerBody: true);
     case BodyPart.leftUpperArm:
       return const BodyParts(leftUpperArm: true);
     case BodyPart.rightUpperArm:
       return const BodyParts(rightUpperArm: true);
     case BodyPart.leftForearm:
-      return const BodyParts(leftLowerArm: true); // Use leftLowerArm
+      return const BodyParts(leftLowerArm: true);
     case BodyPart.rightForearm:
-      return const BodyParts(rightLowerArm: true); // Use rightLowerArm
+      return const BodyParts(rightLowerArm: true);
     case BodyPart.leftThigh:
-      return const BodyParts(leftUpperLeg: true); // Use leftUpperLeg
+      return const BodyParts(leftUpperLeg: true);
     case BodyPart.rightThigh:
-      return const BodyParts(rightUpperLeg: true); // Use rightUpperLeg
+      return const BodyParts(rightUpperLeg: true);
     case BodyPart.leftShin:
-      return const BodyParts(leftLowerLeg: true); // Use leftLowerLeg
+      return const BodyParts(leftLowerLeg: true);
     case BodyPart.rightShin:
-      return const BodyParts(rightLowerLeg: true); // Use rightLowerLeg
+      return const BodyParts(rightLowerLeg: true);
     default:
       return const BodyParts();
   }
 }
 
-/// Isolates only the newly tapped field (enforces single-selection)
 BodyParts? _findAdded(BodyParts prev, BodyParts next) {
   if (!prev.head && next.head) return const BodyParts(head: true);
   if (!prev.neck && next.neck) return const BodyParts(neck: true);
@@ -314,17 +285,16 @@ BodyParts? _findAdded(BodyParts prev, BodyParts next) {
   if (!prev.rightShoulder && next.rightShoulder)
     return const BodyParts(rightShoulder: true);
 
-  // CORRECTED PACKAGE NAMES BELOW:
   if (!prev.upperBody && next.upperBody)
-    return const BodyParts(upperBody: true); // Fixed chest
+    return const BodyParts(upperBody: true);
   if (!prev.leftUpperArm && next.leftUpperArm)
-    return const BodyParts(leftUpperArm: true); // Fixed leftArm
+    return const BodyParts(leftUpperArm: true);
   if (!prev.rightUpperArm && next.rightUpperArm)
-    return const BodyParts(rightUpperArm: true); // Fixed rightArm
+    return const BodyParts(rightUpperArm: true);
   if (!prev.leftLowerArm && next.leftLowerArm)
-    return const BodyParts(leftLowerArm: true); // Fixed leftForearm
+    return const BodyParts(leftLowerArm: true);
   if (!prev.rightLowerArm && next.rightLowerArm)
-    return const BodyParts(rightLowerArm: true); // Fixed rightForearm
+    return const BodyParts(rightLowerArm: true);
 
   if (!prev.leftHand && next.leftHand) return const BodyParts(leftHand: true);
   if (!prev.rightHand && next.rightHand)
@@ -332,16 +302,16 @@ BodyParts? _findAdded(BodyParts prev, BodyParts next) {
   if (!prev.abdomen && next.abdomen) return const BodyParts(abdomen: true);
 
   if (!prev.lowerBody && next.lowerBody)
-    return const BodyParts(lowerBody: true); // Fixed back
+    return const BodyParts(lowerBody: true);
 
   if (!prev.leftUpperLeg && next.leftUpperLeg)
-    return const BodyParts(leftUpperLeg: true); // Fixed leftThigh
+    return const BodyParts(leftUpperLeg: true);
   if (!prev.rightUpperLeg && next.rightUpperLeg)
-    return const BodyParts(rightUpperLeg: true); // Fixed rightThigh
+    return const BodyParts(rightUpperLeg: true);
   if (!prev.leftLowerLeg && next.leftLowerLeg)
-    return const BodyParts(leftLowerLeg: true); // Fixed leftLeg
+    return const BodyParts(leftLowerLeg: true);
   if (!prev.rightLowerLeg && next.rightLowerLeg)
-    return const BodyParts(rightLowerLeg: true); // Fixed rightLeg
+    return const BodyParts(rightLowerLeg: true);
 
   if (!prev.leftFoot && next.leftFoot) return const BodyParts(leftFoot: true);
   if (!prev.rightFoot && next.rightFoot)
@@ -350,9 +320,6 @@ BodyParts? _findAdded(BodyParts prev, BodyParts next) {
   return null;
 }
 
-// ══════════════════════════════════════════════════════════════════════════════
-// SCREEN — same class name, same signature as your original
-// ══════════════════════════════════════════════════════════════════════════════
 class BodyPartSelectorScreen extends StatefulWidget {
   final void Function(BodyPart part, bool fromGallery) onConfirm;
   const BodyPartSelectorScreen({super.key, required this.onConfirm});
@@ -362,16 +329,12 @@ class BodyPartSelectorScreen extends StatefulWidget {
 }
 
 class _BodyPartSelectorState extends State<BodyPartSelectorScreen> {
-  // Package selection state (single-field only)
   BodyParts _pkg = const BodyParts();
 
-  // Current view — synced with toggle buttons
   BodyView _view = BodyView.front;
 
-  // Derived selected part
   BodyPart? get _selected => _fromPkg(_pkg);
 
-  // Chips list based on current view
   List<_Zone> get _zones => _view == BodyView.front ? _frontZones : _backZones;
 
   @override
@@ -385,25 +348,21 @@ class _BodyPartSelectorState extends State<BodyPartSelectorScreen> {
     );
   }
 
-  // ── Called by the SVG body when user taps a region ───────────────────────
   void _onBodyTap(BodyParts next) {
     final added = _findAdded(_pkg, next);
     if (added != null) {
       HapticFeedback.selectionClick();
       setState(() => _pkg = added);
     } else {
-      // Tapped same zone again → deselect
       setState(() => _pkg = const BodyParts());
     }
   }
 
-  // ── Called by chip tap — same logic as original selectPart ───────────────
   void _selectPart(BodyPart p) {
     HapticFeedback.selectionClick();
     setState(() => _pkg = _toPkg(p));
   }
 
-  // ── Called when user taps Next — ORIGINAL logic unchanged ────────────────
   void _confirm() {
     if (_selected == null) return;
     showModalBottomSheet(
@@ -436,7 +395,6 @@ class _BodyPartSelectorState extends State<BodyPartSelectorScreen> {
         children: [
           SizedBox(height: topPad),
 
-          // ── Top bar — ORIGINAL ────────────────────────────────────────────
           Padding(
             padding: const EdgeInsets.fromLTRB(20, 10, 20, 0),
             child: Row(
@@ -471,7 +429,7 @@ class _BodyPartSelectorState extends State<BodyPartSelectorScreen> {
                           fontWeight: FontWeight.w800,
                         ),
                       ),
-                      // ORIGINAL: dynamic subtitle
+
                       Text(
                         sel == null
                             ? 'Tap the region you want to scan'
@@ -510,7 +468,6 @@ class _BodyPartSelectorState extends State<BodyPartSelectorScreen> {
 
           const SizedBox(height: 10),
 
-          // ── Instruction — ORIGINAL animated text ─────────────────────────
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 24),
             child: AnimatedSwitcher(
@@ -533,10 +490,6 @@ class _BodyPartSelectorState extends State<BodyPartSelectorScreen> {
 
           const SizedBox(height: 8),
 
-          // ── Front / Back toggle — ORIGINAL design ────────────────────────
-          // Tapping these drives the package via _showFront flag on
-          // BodyPartSelectorTurnable (the package uses its own swipe
-          // internally, but we keep the buttons for explicit control).
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 80),
             child: Container(
@@ -553,8 +506,7 @@ class _BodyPartSelectorState extends State<BodyPartSelectorScreen> {
                     child: GestureDetector(
                       onTap: () => setState(() {
                         _view = v;
-                        _pkg =
-                            const BodyParts(); // clear selection on view change
+                        _pkg = const BodyParts();
                       }),
                       child: AnimatedContainer(
                         duration: const Duration(milliseconds: 200),
@@ -585,16 +537,6 @@ class _BodyPartSelectorState extends State<BodyPartSelectorScreen> {
 
           const SizedBox(height: 6),
 
-          // ══════════════════════════════════════════════════════════════════
-          // REPLACED: _RealisticBodyPainter → BodyPartSelectorTurnable
-          //
-          // The package renders the real anatomical SVG human body.
-          // • Tap a region → onSelectionUpdated fires → _onBodyTap
-          // • selectedColor matches the tapped part's colour from your enum
-          // • unselectedColor = dark fill matching your app's dark theme
-          // • User can SWIPE to go front ↔ back (package handles internally)
-          // • showFront drives the initial view from our toggle buttons
-          // ══════════════════════════════════════════════════════════════════
           Expanded(
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 12),
@@ -603,13 +545,12 @@ class _BodyPartSelectorState extends State<BodyPartSelectorScreen> {
                 onSelectionUpdated: _onBodyTap,
                 selectedColor: sel?.color ?? _C.primary,
                 unselectedColor: const Color(0xFF2A2A3E),
-                // showFront drives which side is shown when toggle is tapped
+
                 mirrored: _view == BodyView.front,
               ),
             ),
           ),
 
-          // ── Selected part pill — ORIGINAL animated card ───────────────────
           AnimatedSwitcher(
             duration: const Duration(milliseconds: 300),
             transitionBuilder: (child, anim) => SlideTransition(
@@ -676,7 +617,6 @@ class _BodyPartSelectorState extends State<BodyPartSelectorScreen> {
 
           const SizedBox(height: 10),
 
-          // ── Quick chips row — ORIGINAL _Chip widget, unchanged ────────────
           SizedBox(
             height: 34,
             child: ListView(
@@ -696,7 +636,6 @@ class _BodyPartSelectorState extends State<BodyPartSelectorScreen> {
 
           const SizedBox(height: 12),
 
-          // ── Next button — ORIGINAL design, unchanged ──────────────────────
           Padding(
             padding: EdgeInsets.fromLTRB(20, 0, 20, bottomPad + 16),
             child: GestureDetector(
@@ -756,9 +695,6 @@ class _BodyPartSelectorState extends State<BodyPartSelectorScreen> {
   }
 }
 
-// ══════════════════════════════════════════════════════════════════════════════
-// _Chip — ORIGINAL widget, unchanged
-// ══════════════════════════════════════════════════════════════════════════════
 class _Chip extends StatelessWidget {
   final _Zone zone;
   final bool isSelected;
@@ -806,9 +742,6 @@ class _Chip extends StatelessWidget {
   }
 }
 
-// ══════════════════════════════════════════════════════════════════════════════
-// _SourceSheet — ORIGINAL bottom sheet, unchanged
-// ══════════════════════════════════════════════════════════════════════════════
 class _SourceSheet extends StatelessWidget {
   final BodyPart part;
   final VoidCallback onCamera;
